@@ -8,6 +8,8 @@ try:
     df_acc['No. Faktur'] = df_acc['No. Faktur'].str.strip()
     df_ctx['Referensi'] = df_ctx['Referensi'].str.strip()
 
+    df_ctx = df_ctx.drop_duplicates(subset=['Referensi'], keep='first')
+
     df_merged = pd.merge(
         df_acc[['No. Faktur']],
         df_ctx[['Referensi', 'Nomor Faktur Pajak']],
@@ -46,9 +48,9 @@ try:
             adjusted_width = (max_length + 2)
             worksheet.column_dimensions[column_letter].width = adjusted_width
 
-    print("Berhasil menyimpan Faktur.xlsx")
+    print("--> Berhasil menyimpan Faktur.xlsx")
 
 except Exception as e:
-    print(f"Terjadi kesalahan: {e}")
+    print(f"--> Terjadi kesalahan: {e}")
 
 input("Tekan Enter untuk keluar")
